@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace PIMS.Service
 {
-  
+
     public class ProductService
     {
         private readonly string _conString;
@@ -51,34 +51,34 @@ namespace PIMS.Service
 
         public async Task<string> InsertPro(ProductModel model)
         {
-            
-            if(model.Price<=0)
+
+            if (model.Price <= 0)
             {
                 return "Price must be greater than zero";
             }
             string res = "";
-            using(SqlConnection con=new SqlConnection(_conString))
+            using (SqlConnection con = new SqlConnection(_conString))
             {
                 con.Open();
                 //Check Unique
                 string checkquery = "select count(SKU) from products where SKU=@SKU";
-                using(SqlCommand cmd=new SqlCommand(checkquery, con))
+                using (SqlCommand cmd = new SqlCommand(checkquery, con))
                 {
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@sku", model.SKU);
-                    int count=(int)cmd.ExecuteScalar(); 
-                    if(count>0)
+                    int count = (int)cmd.ExecuteScalar();
+                    if (count > 0)
                     {
                         return "SKU already exist";
                     }
-  
+
                 }
 
                 //Insert Product
                 string insertQuery = @"INSERT INTO Products (SKU, Name, Description, Price, CategoryId, CreatedDate)
                                VALUES (@SKU, @Name, @Description, @Price, @CategoryId, GETDATE())";
 
-                using (SqlCommand cmd=new SqlCommand(insertQuery, con))
+                using (SqlCommand cmd = new SqlCommand(insertQuery, con))
                 {
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@SKU", model.SKU);
@@ -108,8 +108,8 @@ namespace PIMS.Service
                 con.Open();
 
                 //Up Product
-                string UpdateQuery = "UPDATE Products "+
-                              " SET  Price = @Pric e"+
+                string UpdateQuery = "UPDATE Products " +
+                              " SET  Price = @Pric e" +
                               " WHERE SKU = @SKU ";
 
                 using (SqlCommand cmd = new SqlCommand(UpdateQuery, con))
@@ -127,3 +127,4 @@ namespace PIMS.Service
             }
         }
     }
+}

@@ -21,24 +21,45 @@ namespace PIMS.Controllers
 
         public async Task<IActionResult> InsertPro([FromBody] ProductModel model)
         {
-            string res = await _productService.InsertPro(model);
-            return Ok(res);
+            try
+            {
+                string res = await _productService.InsertPro(model);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        //Get All User
+        //Get All Pro
         [HttpGet("GetProduct")]
-        public async Task<IActionResult> GetUserDetail()
+        public async Task<IActionResult> GetProDetail()
         {
-            ProductModel pro = await _productService.GetProduct();
-            return Ok(pro);
+            try
+            {
+                ProductModel pro = await _productService.GetProduct();
+                return Ok(pro);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         //Update Product
         [HttpPost("UpPrice")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductModel model)
         {
-            string uppro = await _productService.UpdateProPrice(model);
-            return Ok(uppro);
+            try
+            {
+                string uppro = await _productService.UpdateProPrice(model);
+                return Ok(uppro);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

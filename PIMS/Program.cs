@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 //add
 builder.Services.AddScoped<PIMS.Service.User>();
 builder.Services.AddScoped<PIMS.Service.ProductService>();
+builder.Services.AddScoped<PIMS.Service.InventoryService>();
 
 var app = builder.Build();
 
