@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Project\\Product Inventory Management System\\PIMS\\PIMS\\PIMS.csproj": {}
+    "F:\\GitRepo\\PIMS\\PIMS\\PIMS.csproj": {}
   },
   "projects": {
-    "F:\\Project\\Product Inventory Management System\\PIMS\\PIMS\\PIMS.csproj": {
+    "F:\\GitRepo\\PIMS\\PIMS\\PIMS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Project\\Product Inventory Management System\\PIMS\\PIMS\\PIMS.csproj",
+        "projectUniqueName": "F:\\GitRepo\\PIMS\\PIMS\\PIMS.csproj",
         "projectName": "PIMS",
-        "projectPath": "F:\\Project\\Product Inventory Management System\\PIMS\\PIMS\\PIMS.csproj",
+        "projectPath": "F:\\GitRepo\\PIMS\\PIMS\\PIMS.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "F:\\Project\\Product Inventory Management System\\PIMS\\PIMS\\obj\\",
+        "outputPath": "F:\\GitRepo\\PIMS\\PIMS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -47,6 +47,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.9.0, )"
             }
           },
           "imports": [

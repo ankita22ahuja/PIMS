@@ -34,9 +34,9 @@ namespace PIMS.Controllers
         }
 
         //Get All User
-        public IActionResult GetUserDetail()
-        {
-            return Ok();
-        }
+        //public IActionResult GetUserDetail()
+        //{
+        //    return Ok();
+        //}
     }
 }
