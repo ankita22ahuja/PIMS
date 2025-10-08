@@ -7,6 +7,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//add
+builder.Services.AddScoped<PIMS.Service.User>();
+builder.Services.AddScoped<PIMS.Service.ProductService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

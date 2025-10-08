@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlTypes;
 using System.Data.SqlClient;
+using PIMS.Service;
+using PIMS.Model;
 
 namespace PIMS.Controllers
 {
@@ -10,10 +12,12 @@ namespace PIMS.Controllers
     public class UsersController : ControllerBase
     {
         private readonly string _conString;
+        private readonly User _userService;
 
-        public UsersController(IConfiguration config)
+        public UsersController(IConfiguration config, User userService)
         {
             _conString = config.GetConnectionString("SqlConnection");
+            _userService = userService;
         }
 
         [HttpGet("TestConn")]
@@ -33,10 +37,14 @@ namespace PIMS.Controllers
             }
         }
 
+        [HttpGet("GetUserAuth")]
         //Get All User
-        //public IActionResult GetUserDetail()
-        //{
-        //    return Ok();
-        //}
+        public async Task<IActionResult> GetUserDetail()
+        {
+            UserModel user = await _userService.GetUser();
+            return Ok(user);
+        }
+
+
     }
 }
