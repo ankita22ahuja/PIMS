@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Data.SqlClient;
 using PIMS.Service;
 using PIMS.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PIMS.Controllers
 {
@@ -37,6 +38,7 @@ namespace PIMS.Controllers
             }
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpGet("GetUserAuth")]
         //Get All User
         public async Task<IActionResult> GetUserDetail()
@@ -44,6 +46,23 @@ namespace PIMS.Controllers
             UserModel user = await _userService.GetUser();
             return Ok(user);
         }
+
+        //Login By UserId
+        [HttpPost("LoginByUserID")]
+        public async Task<IActionResult> Login([FromBody]int UserId)
+        {
+            var token = await _userService.GenerateTokenByUserId(UserId);
+            if(token == null)
+            {
+                return NotFound("UserId not found");
+            }
+
+            return Ok(new
+            {
+                Token = token,
+            });
+        }
+
 
 
     }

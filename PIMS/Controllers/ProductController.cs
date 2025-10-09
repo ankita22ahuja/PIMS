@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PIMS.Model;
 using PIMS.Service;
@@ -44,8 +45,9 @@ namespace PIMS.Controllers
         }
 
 
+        [Authorize(Roles = "User")]
         //Get All Pro
-        [HttpGet("GetProduct")]
+        [HttpGet("GetProductUser")]
         public async Task<IActionResult> GetProDetail()
         {
             try
@@ -59,7 +61,9 @@ namespace PIMS.Controllers
             }
         }
 
+
         //Update Product
+        [Authorize(Roles = "Admin")]
         [HttpPost("UpPrice")]
         public async Task<IActionResult> UpdateProduct([FromForm] decimal Price,[FromForm] string SKU)
         {
@@ -72,6 +76,22 @@ namespace PIMS.Controllers
                     return Ok("Product Price Updated Successfully.");
                 }
                 return Ok(uppro);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        //Get All Pro
+        [HttpGet("GetProductAdmin")]
+        public async Task<IActionResult> GetProDetailAdmin()
+        {
+            try
+            {
+                ProductModel pro = await _productService.GetProduct();
+                return Ok(pro);
             }
             catch (Exception ex)
             {
