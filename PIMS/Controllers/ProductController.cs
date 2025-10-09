@@ -24,13 +24,25 @@ namespace PIMS.Controllers
             try
             {
                 string res = await _productService.InsertPro(model);
-                return Ok(res);
+                if(res == "1") {
+                    return Ok("Product Saved Succefully.");
+                }
+                else if(res == "0") 
+                {
+                    return Ok("Product Not Saved.");
+                }
+                else
+                {
+                    return BadRequest();
+                }
+               // return Ok(res);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
 
         //Get All Pro
         [HttpGet("GetProduct")]
@@ -49,11 +61,16 @@ namespace PIMS.Controllers
 
         //Update Product
         [HttpPost("UpPrice")]
-        public async Task<IActionResult> UpdateProduct([FromBody] ProductModel model)
+        public async Task<IActionResult> UpdateProduct([FromForm] decimal Price,[FromForm] string SKU)
         {
             try
             {
-                string uppro = await _productService.UpdateProPrice(model);
+                ProductModel pro=new ProductModel();
+                string uppro = await _productService.UpdateProPrice(Price, SKU);
+                if(uppro == "1")
+                {
+                    return Ok("Product Price Updated Successfully.");
+                }
                 return Ok(uppro);
             }
             catch (Exception ex)

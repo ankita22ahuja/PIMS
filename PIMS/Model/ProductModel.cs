@@ -5,7 +5,7 @@
         public string SKU { get; set; }
         public string Name { get; set; }
         public string Desciption { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         //For key
         public int CatId { get; set; }

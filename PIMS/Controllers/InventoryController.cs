@@ -17,7 +17,7 @@ namespace PIMS.Controllers
         }
 
         //Get All Threshold  Inventory
-        [HttpGet("GetProductThreshold ")]
+        [HttpGet("GetProductThreshold")]
         public async Task<IActionResult> GetInDetail()
         {
             try

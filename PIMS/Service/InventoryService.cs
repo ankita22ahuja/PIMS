@@ -19,7 +19,7 @@ namespace PIMS.Service
             using (SqlConnection con = new SqlConnection(_conString))
             {
                 await con.OpenAsync();
-                string query = "SELECT ProductID, Quantity, Threshold FROM Inventory WHERE Quantity < Threshold";
+                string query = "SELECT pro.name,inv.ProductID, inv.Quantity, inv.Threshold FROM Inventory inv,Products pro\r\nWHERE inv.productid=pro.productid and inv.Quantity < inv.Threshold";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
                 {
@@ -27,7 +27,7 @@ namespace PIMS.Service
                     {
                         model = (new InventoryModel
                         {
-                            ProId = (int)rdr["ProductID"],
+                            ProductName = rdr["name"].ToString(),
                             Quanity = (int)rdr["Quantity"],
                             Threshold = (int)rdr["Threshold"]
                         });

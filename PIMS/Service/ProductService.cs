@@ -20,7 +20,7 @@ namespace PIMS.Service
             using (SqlConnection con = new SqlConnection(_conString))
             {
                 await con.OpenAsync();
-                string query = "select SKU,Name,Desciption,Price,CategoryId  from Products";
+                string query = "select Pro.SKU,Pro.Name,Pro.Description,Pro.Price,pro.CategoryId,cat.CategoryName from Products Pro,Categories cat where pro.CategoryId=cat.CategoryId";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.Clear();
@@ -34,7 +34,7 @@ namespace PIMS.Service
                                 SKU = red["SKU"].ToString(),
                                 Name = red["Name"].ToString(),
                                 Desciption = red["Description"].ToString(),
-                                Price = (int)red["Price"],
+                                Price = (decimal)red["Price"],
                                 CatId = (int)red["CategoryId"]
 
                             };
@@ -96,9 +96,10 @@ namespace PIMS.Service
         }
 
         //UPdate Product Price
-        public async Task<string> UpdateProPrice(ProductModel model)
+  
+        public async Task<string> UpdateProPrice(decimal Price,string SKU)
         {
-            if (model.Price <= 0)
+            if (Price <= 0)
             {
                 return "Price must be greater than zero";
             }
@@ -109,15 +110,15 @@ namespace PIMS.Service
 
                 //Up Product
                 string UpdateQuery = "UPDATE Products " +
-                              " SET  Price = @Pric e" +
+                              " SET  Price = @Price" +
                               " WHERE SKU = @SKU ";
 
                 using (SqlCommand cmd = new SqlCommand(UpdateQuery, con))
                 {
                     cmd.Parameters.Clear();
 
-                    cmd.Parameters.AddWithValue("@Price", model.Price);
-                    cmd.Parameters.AddWithValue("@SKU", model.SKU);
+                    cmd.Parameters.AddWithValue("@Price", Price);
+                    cmd.Parameters.AddWithValue("@SKU", SKU);
 
                     int affectedRows = await cmd.ExecuteNonQueryAsync();
                     res = affectedRows.ToString();
